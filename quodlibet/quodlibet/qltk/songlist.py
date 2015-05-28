@@ -1058,7 +1058,7 @@ class SongList(AllTreeView, SongListDnDMixin, DragScroll,
         menu.append(sep)
 
         trackinfo = """title genre ~title~version ~#track
-            ~#playcount ~#skipcount ~rating ~#length ~playlists""".split()
+            ~#playcount ~#skipcount ~rating ~energy ~#length ~playlists""".split()
         peopleinfo = """artist ~people performer arranger author composer
             conductor lyricist originalartist""".split()
         albuminfo = """album ~album~discsubtitle labelid ~#disc ~#discs

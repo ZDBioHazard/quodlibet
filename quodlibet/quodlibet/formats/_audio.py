@@ -35,7 +35,7 @@ except ImportError:  # python3.x
     izip = zip
 
 MIGRATE = {"~#playcount", "~#laststarted", "~#lastplayed", "~#added",
-           "~#skipcount", "~#rating", "~bookmark"}
+           "~#skipcount", "~#rating", "~#energy", "~bookmark"}
 """These get migrated if a song gets reloaded"""
 
 PEOPLE = ["artist", "albumartist", "author", "composer", "~performers",
@@ -292,6 +292,10 @@ class AudioFile(dict, ImageContainer):
                 return dict.get(self, "~" + key, config.RATINGS.default)
             elif key == "rating":
                 return util.format_rating(self("~#rating"))
+            elif key == "#energy":
+                return dict.get(self, "~" + key, config.ENERGY.default)
+            elif key == "energy":
+                return util.format_energy(self("~#energy"))
             elif key == "people":
                 return "\n".join(self.list_unique(PEOPLE)) or default
             elif key == "people:real":
@@ -796,6 +800,8 @@ class AudioFile(dict, ImageContainer):
             s.append("%s=%d" % (enc_key, self.get(k, 0)))
         if "~#rating" not in self:
             s.append("~#rating=%f" % self("~#rating"))
+        if "~#energy" not in self:
+            s.append("~#energy=%f" % self("~#energy"))
         s.append("~format=%s" % self.format)
         s.append("")
         return "\n".join(s)
