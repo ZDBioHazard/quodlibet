@@ -11,6 +11,7 @@ from quodlibet.browsers.iradio import InternetRadio, IRFile, QuestionBar
 import quodlibet.config
 
 quodlibet.config.RATINGS = quodlibet.config.HardCodedRatingsPrefs()
+quodlibet.config.ENERGY = quodlibet.config.HardCodedEnergyPrefs()
 
 
 class TQuestionBar(TestCase):
