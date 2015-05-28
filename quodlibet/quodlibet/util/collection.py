@@ -58,6 +58,7 @@ NUM_DEFAULT_FUNCS = {
     "laststarted": "max",
     "mtime": "max",
     "rating": "bav",
+    "energy": "avg",
     "skipcount": "sum",
     "year": "min",
     "originalyear": "min",
@@ -255,6 +256,11 @@ class Collection(object):
                 if rating is None:
                     return None
                 return util.format_rating(rating)
+            elif numkey == "energy":
+                energy = self.__get_value("~#" + key)
+                if energy is None:
+                    return None
+                return util.format_energy(energy)
             elif numkey == "filesize":
                 size = self.__get_value("~#" + key)
                 return None if size is None else util.format_size(size)

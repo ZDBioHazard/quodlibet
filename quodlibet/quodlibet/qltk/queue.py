@@ -308,7 +308,7 @@ class PlayQueue(SongList):
 
         menu = SongsMenu(
             library, songs, queue=False, remove=False, delete=False,
-            ratings=False)
+            ratings=False, energy=False)
         menu.preseparate()
         remove = MenuItem(_("_Remove"), Icons.LIST_REMOVE)
         qltk.add_fake_accel(remove, "Delete")

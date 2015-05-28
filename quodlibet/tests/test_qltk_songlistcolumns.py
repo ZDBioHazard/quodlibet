@@ -26,7 +26,8 @@ class TSongListColumns(TestCase):
         view = Gtk.TreeView()
         model = PlaylistModel()
         view.set_model(model)
-        song = AudioFile({"~filename": devnull, "~#rating": 0.6666})
+        song = AudioFile({"~filename": devnull, "~#rating": 0.6666,
+                          "~#energy": 0.6666})
         song.update(kwargs)
         model.append(row=[song])
         view.append_column(column)
@@ -62,6 +63,15 @@ class TSongListColumns(TestCase):
         self.assertNotEqual(text, "0.67")
 
         column = create_songlist_column("~#rating")
+        text = self._render_column(column)
+        self.assertEqual(text, "0.67")
+
+    def test_energy(self):
+        column = create_songlist_column("~energy")
+        text = self._render_column(column)
+        self.assertNotEqual(text, "0.67")
+
+        column = create_songlist_column("~#energy")
         text = self._render_column(column)
         self.assertEqual(text, "0.67")
 
