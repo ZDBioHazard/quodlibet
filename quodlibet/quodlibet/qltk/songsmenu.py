@@ -25,6 +25,7 @@ from quodlibet.qltk.information import Information
 from quodlibet.qltk.properties import SongProperties
 from quodlibet.qltk.x import SeparatorMenuItem
 from quodlibet.qltk.ratingsmenu import RatingsMenuItem
+from quodlibet.qltk.energymenu import EnergyMenuItem
 from quodlibet.qltk import get_top_parent, get_menu_item_top_parent, Icons
 from quodlibet.plugins import PluginManager, PluginHandler
 from quodlibet.plugins.songsmenu import SongsMenuPlugin
@@ -265,7 +266,7 @@ class SongsMenu(Gtk.Menu):
     def __init__(self, library, songs, plugins=True, playlists=True,
                  queue=True, remove=True, delete=False, edit=True,
                  ratings=True, show_files=True, items=None, accels=True,
-                 removal_confirmer=None):
+                 energy=True, removal_confirmer=None):
         super(SongsMenu, self).__init__()
         # The library may actually be a librarian; if it is, use it,
         # otherwise find the real librarian.
@@ -275,6 +276,13 @@ class SongsMenu(Gtk.Menu):
             ratings_item = RatingsMenuItem(songs, librarian)
             ratings_item.set_sensitive(bool(songs))
             self.append(ratings_item)
+
+        if energy:
+            energy_item = EnergyMenuItem(songs, librarian)
+            energy_item.set_sensitive(bool(songs))
+            self.append(energy_item)
+
+        if ratings or energy:
             self.separate()
 
         # external item groups

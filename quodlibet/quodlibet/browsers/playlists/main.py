@@ -474,7 +474,7 @@ class PlaylistsBrowser(Browser, DisplayPatternMixin):
         songs = [s for s in songs if isinstance(s, AudioFile)]
         menu = SongsMenu(library, songs,
                          playlists=False, remove=False,
-                         ratings=False)
+                         ratings=False, energy=False)
         menu.preseparate()
 
         def _remove(model, itr):

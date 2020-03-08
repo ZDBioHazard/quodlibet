@@ -254,13 +254,16 @@ class OneSong(qltk.Notebook):
         added = ftime(song.get("~#added", 0))
         rating = song("~rating")
         has_rating = "~#rating" in song
+        energy = song("~energy")
+        has_energy = "~#energy" in song
 
         t = Table(5)
         table = [(_("added"), added, True),
                  (_("last played"), lastplayed, True),
                  (_("plays"), playcount, True),
                  (_("skips"), skipcount, True),
-                 (_("rating"), rating, has_rating)]
+                 (_("rating"), rating, has_rating),
+                 (_("energy"), energy, has_energy)]
 
         for i, (l, r, s) in enumerate(table):
             l = util.capitalize(l + ":")

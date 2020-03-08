@@ -90,6 +90,7 @@ class Icons(str):
     MEDIA_PLAYLIST_REPEAT = "media-playlist-repeat"
     MEDIA_PLAYLIST_SHUFFLE = "media-playlist-shuffle"
     MEDIA_RECORD = "media-record"
+    MEDIA_SEEK_FORWARD = "media-seek-forward"  # "Energ_y
     MEDIA_SKIP_BACKWARD = "media-skip-backward"  # "Pre_vious"
     MEDIA_SKIP_FORWARD = "media-skip-forward"  # "_Next"
     MULTIMEDIA_PLAYER = "multimedia-player"
