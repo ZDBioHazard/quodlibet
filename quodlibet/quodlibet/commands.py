@@ -26,7 +26,7 @@ from quodlibet.order.repeat import RepeatListForever, RepeatSongForever, \
         OneSong
 from quodlibet.order.reorder import OrderWeighted, OrderShuffle
 
-from quodlibet.config import RATINGS
+from quodlibet.config import RATINGS, ENERGY
 
 
 class CommandError(Exception):
@@ -329,6 +329,32 @@ def _rating(app, value):
         except (ValueError, TypeError):
             return
     song["~#rating"] = max(0.0, min(1.0, rating))
+    app.library.changed([song])
+
+
+@registry.register("energy", args=1)
+def _set_energy(app, value):
+    song = app.player.song
+    if not song:
+        return
+
+    if value[0] in ('+', '-'):
+        if len(value) > 1:
+            try:
+                change = float(value[1:])
+            except ValueError:
+                return
+        else:
+            change = (1 / ENERGY.number)
+        if value[0] == '-':
+            change = -change
+        rating = song["~#energy"] + change
+    else:
+        try:
+            rating = float(value)
+        except (ValueError, TypeError):
+            return
+    song["~#energy"] = max(0.0, min(1.0, rating))
     app.library.changed([song])
 
 

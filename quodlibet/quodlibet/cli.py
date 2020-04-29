@@ -79,7 +79,7 @@ def process_arguments(argv):
     controls_opt = ["seek", "repeat", "query", "volume", "filter",
                     "rating", "set-browser", "open-browser", "shuffle",
                     "queue", "stop-after", "random", "repeat-type",
-                    "shuffle-type", "add-location"]
+                    "energy", "shuffle-type", "add-location"]
 
     options = util.OptionParser(
         "Quod Libet", const.VERSION,
@@ -130,6 +130,7 @@ def process_arguments(argv):
         ("query", _("Search your audio library"), _("query")),
         ("play-file", _("Play a file"), C_("command", "filename")),
         ("rating", _("Set rating of playing song"), "[+|-]0.0..1.0"),
+        ("energy", _("Set the energy of the playing song"), "[+|-]0.0..1.0"),
         ("set-browser", _("Set the current browser"), "BrowserName"),
         ("stop-after", _("Stop after the playing song"), "0|1|t"),
         ("open-browser", _("Open a new browser"), "BrowserName"),
@@ -190,6 +191,7 @@ def process_arguments(argv):
         "volume": is_vol,
         "seek": is_time,
         "rating": is_rate,
+        "energy": is_rate,
         "stop-after": ["0", "1", "t"].__contains__,
         }
 

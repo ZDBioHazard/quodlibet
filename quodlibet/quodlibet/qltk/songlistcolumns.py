@@ -37,6 +37,8 @@ def create_songlist_column(t):
         return FilesizeColumn()
     elif t in ["~rating"]:
         return RatingColumn()
+    elif t in ["~energy"]:
+        return EnergyColumn()
     elif t.startswith("~#"):
         return NumericColumn(t)
     elif t in FILESYSTEM_TAGS:
@@ -243,6 +245,33 @@ class RatingColumn(TextColumn):
         cell.set_sensitive(rating is not None)
         value = rating if rating is not None else default
         cell.set_property('text', util.format_rating(value))
+
+
+class EnergyColumn(TextColumn):
+    """Render ~energy directly
+
+    (simplifies filtering, saves a function call).
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(EnergyColumn, self).__init__("~energy", *args, **kwargs)
+        self.set_expand(False)
+        self.set_resizable(False)
+
+    def _get_min_width(self):
+        return self._cell_width(util.format_energy(1.0))
+
+    def _fetch_value(self, model, iter_):
+        song = model.get_value(iter_)
+        energy = song.get("~#energy")
+        default = config.ENERGY.default
+        return (energy, default)
+
+    def _apply_value(self, model, iter_, cell, value):
+        energy, default = value
+        cell.set_sensitive(energy is not None)
+        value = energy if energy is not None else default
+        cell.set_property('text', util.format_energy(value))
 
 
 class WideTextColumn(TextColumn):

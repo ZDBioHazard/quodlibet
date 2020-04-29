@@ -18,7 +18,7 @@ from quodlibet.browsers._base import FakeDisplayItem, EditDisplayPatternMixin
 from quodlibet.formats import PEOPLE
 from quodlibet.qltk import Button, Icons
 from quodlibet.qltk.ccb import ConfigCheckButton
-from quodlibet.util import format_rating
+from quodlibet.util import format_rating, format_energy
 from quodlibet.util.i18n import numeric_phrase
 
 PEOPLE
@@ -41,6 +41,7 @@ class Preferences(qltk.UniqueWindow, EditDisplayPatternMixin):
         "~tracks": numeric_phrase("%d track", "%d tracks", 5),
         "~discs": numeric_phrase("%d disc", "%d discs", 2),
         "~#rating": 0.75,
+        "~#energy": 0.5,
         "album": _("An Example Album"),
         "~people": _SOME_PEOPLE + "..."})
 
@@ -54,6 +55,7 @@ class Preferences(qltk.UniqueWindow, EditDisplayPatternMixin):
         self.set_transient_for(qltk.get_top_parent(browser))
         # Do this config-driven setup at instance-time
         self._PREVIEW_ITEM["~rating"] = format_rating(0.75)
+        self._PREVIEW_ITEM["~energy"] = format_energy(0.5)
 
         box = Gtk.VBox(spacing=6)
         vbox = Gtk.VBox(spacing=6)

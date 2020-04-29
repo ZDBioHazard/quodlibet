@@ -39,7 +39,7 @@ from ._misc import AudioFileError, translate_errors
 translate_errors
 
 MIGRATE = {"~#playcount", "~#laststarted", "~#lastplayed", "~#added",
-           "~#skipcount", "~#rating", "~bookmark"}
+           "~#skipcount", "~#rating", "~#energy", "~bookmark"}
 """These get migrated if a song gets reloaded"""
 
 PEOPLE = ["artist", "albumartist", "author", "composer", "~performers",
@@ -333,6 +333,10 @@ class AudioFile(dict, ImageContainer):
                 return dict.get(self, "~" + key, config.RATINGS.default)
             elif key == "rating":
                 return util.format_rating(self("~#rating"))
+            elif key == "#energy":
+                return dict.get(self, "~" + key, config.ENERGY.default)
+            elif key == "energy":
+                return util.format_energy(self("~#energy"))
             elif key == "people":
                 return "\n".join(self.list_unique(PEOPLE)) or default
             elif key == "people:real":
@@ -671,6 +675,20 @@ class AudioFile(dict, ImageContainer):
 
         self.pop("~#rating", None)
 
+    @property
+    def has_energy(self):
+        """True if the song has energy set.
+
+        In case this is False song('~#energy') would return the default value
+        """
+
+        return self.get("~#energy") is not None
+
+    def remove_energy(self):
+        """Removes the set energy so the default will be returned"""
+
+        self.pop("~#energy", None)
+
     def comma(self, key):
         """Get all values of a tag, separated by commas. Synthetic
         tags are supported, but will be slower. All list items
@@ -938,6 +956,8 @@ class AudioFile(dict, ImageContainer):
             s.append(l)
         if "~#rating" not in self:
             s.append(encode("~#rating=%f" % self("~#rating")))
+        if "~#energy" not in self:
+            s.append(encode("~#energy=%f" % self("~#energy")))
         s.append(encode("~format=%s" % self.format))
         s.append(b"")
         return b"\n".join(s)
